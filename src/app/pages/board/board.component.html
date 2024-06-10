@@ -1,0 +1,19 @@
+<div class="card-container">
+    <app-board-selector></app-board-selector>
+    <app-ticket-creator></app-ticket-creator>
+    <div class="cards-grid" [ngStyle]="getStyles()">
+        <!-- <app-board-column *ngFor="let column of columns; index as i" [columnData]="column.status"
+            [tickets]="column.tickets"></app-board-column> -->
+        <div *ngFor="let column of columns; index as i">
+            <div>
+                <fluent-label>{{ column.status.name }} {{ column.status.id }}</fluent-label>
+            </div>
+            <div id="{{ column.status.id.toString() }}" 
+                [cdkDropListConnectedTo]="connectedColumns" [cdkDropListData]="column.tickets" cdkDropList (cdkDropListDropped)="onDrop($event)">
+                <fluent-card cdkDrag *ngFor="let ticket of column.tickets">
+                    {{ ticket.id }} - {{ ticket.title }}
+                </fluent-card>
+            </div>
+        </div>
+    </div>
+</div>

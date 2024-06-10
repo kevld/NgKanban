@@ -1,0 +1,12 @@
+<span>
+    <fluent-label>Select board : </fluent-label>
+    <fluent-select title="Select a section" (change)="onChange($event)">
+        <fluent-option *ngFor="let board of boards$ | async" value="{{ board.id }}">{{ board.title }}</fluent-option>
+    </fluent-select>
+</span>
+<span>
+    <fluent-label>Or create a new one : </fluent-label>
+    <fluent-text-field appearance="outline" name="title" ngDefaultControl [(ngModel)]="title" placeholder="Board name"></fluent-text-field>
+    <fluent-text-field appearance="outline" name="description" ngDefaultControl [(ngModel)]="description" placeholder="Board description"></fluent-text-field>
+    <fluent-button appearance="accent" (click)="createBoard()">Create</fluent-button>
+</span>
