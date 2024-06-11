@@ -1,7 +1,7 @@
 <div class="card-container">
     <app-board-selector></app-board-selector>
     <app-ticket-creator></app-ticket-creator>
-    <div class="cards-grid" [ngStyle]="getStyles()">
+    <div class="cards-grid" cdkDropListGroup [ngStyle]="getStyles()">
         <!-- <app-board-column *ngFor="let column of columns; index as i" [columnData]="column.status"
             [tickets]="column.tickets"></app-board-column> -->
         <div class="card-col" *ngFor="let column of columns; index as i">
@@ -9,7 +9,7 @@
                 <fluent-label>{{ column.statusName }}</fluent-label>
             </div>
             <fluent-divider class="mt-2 mb-3"></fluent-divider>
-            <div id="{{ column.status}}" [cdkDropListConnectedTo]="connectedColumns" [cdkDropListData]="column.tickets"
+            <div id="{{ column.status}}" class="column-container"  [cdkDropListConnectedTo]="connectedColumns" [cdkDropListData]="column.tickets"
                 cdkDropList (cdkDropListDropped)="onDrop($event)">
                 <div class="row" *ngFor="let ticket of column.tickets">
                     <div class="col-12">
