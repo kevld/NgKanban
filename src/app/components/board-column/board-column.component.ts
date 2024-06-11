@@ -3,7 +3,7 @@ import { BoardState } from '../../states/board/board-state.state';
 import { Observable } from 'rxjs';
 import { IBoard } from '../../interfaces/iboard';
 import { Select, Store } from '@ngxs/store';
-import { ITicketStatus } from '../../interfaces/iticket-status';
+import { IStatus } from '../../interfaces/iticket-status';
 import { ITicket } from '../../interfaces/iticket';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { RegisterColumnAction, UnRegisterColumnAction } from '../../actions/board/board-actions.action';
@@ -16,7 +16,7 @@ import { RegisterColumnAction, UnRegisterColumnAction } from '../../actions/boar
 export class BoardColumnComponent implements OnInit, OnDestroy {
     
     @Input()
-    columnData!: ITicketStatus;
+    columnData!: IStatus;
 
     @Input()
     tickets?: ITicket[];

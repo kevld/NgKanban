@@ -7,6 +7,9 @@ import { GetTicketsByBoardAction, UpdateTicketStateAction } from '../../actions/
 import { TicketState } from '../../states/ticket/ticket.state';
 import { ITicket } from '../../interfaces/iticket';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { GetStatusListByBoardAction } from '../../actions/status/status-actions.action';
+import { StatusState } from '../../states/status/status.state';
+import { IStatus } from '../../interfaces/iticket-status';
 
 @Component({
     selector: 'app-board',
@@ -35,24 +38,25 @@ export class BoardComponent implements OnInit {
     ngOnInit(): void {
         this.selectedBoardId$?.subscribe(x => {
             this.store.dispatch(new GetTicketsByBoardAction(x));
+            this.store.dispatch(new GetStatusListByBoardAction(x))
         });
 
         this.tickets$?.subscribe(x => {
             this.columns = [];
 
-            if (!x || !x.length)
-                return;
-            const columns = [... new Set(x.map(t => t.status.id))];
+            
 
-            columns.forEach(col => {
+            const columns: IStatus[] = this.store.selectSnapshot<IStatus[]>(StatusState.statusList);
+
+            columns.forEach((col: IStatus) => {
                 this.columns.push({
-                    status: x.map(t => t.status).filter(s => s.id == col)[0],
-                    tickets: x.filter(t => t.statusId === col)
+                    status: col.id,
+                    tickets: x.filter(t => t.statusId === col.id)
                 });
             });
 
 
-            this.connectedColumns = columns.map(x => x.toString());
+            this.connectedColumns = columns.map(x => x.id.toString());
 
             //this.store.dispatch(new DragDropConnection(this.columns.map(x => x.)));
         });

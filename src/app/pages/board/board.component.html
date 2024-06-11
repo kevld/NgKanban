@@ -8,7 +8,7 @@
             <div>
                 <fluent-label>{{ column.status.name }} {{ column.status.id }}</fluent-label>
             </div>
-            <div id="{{ column.status.id.toString() }}" 
+            <div id="{{ column.status}}" 
                 [cdkDropListConnectedTo]="connectedColumns" [cdkDropListData]="column.tickets" cdkDropList (cdkDropListDropped)="onDrop($event)">
                 <fluent-card cdkDrag *ngFor="let ticket of column.tickets">
                     {{ ticket.id }} - {{ ticket.title }}

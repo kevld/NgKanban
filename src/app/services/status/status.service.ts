@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITicketStatus } from '../../interfaces/iticket-status';
+import { IStatus } from '../../interfaces/iticket-status';
 
 @Injectable({
     providedIn: 'root'
@@ -10,13 +10,14 @@ export class StatusService {
 
     constructor(private http: HttpClient) { }
 
-    createStatus(name: string): Observable<ITicketStatus> {
-        return this.http.post<ITicketStatus>('http://localhost:5067/api/Status', {
-            'Name': name
+    createStatus(boardId: number, statusName: string): Observable<IStatus> {
+        return this.http.post<IStatus>('http://localhost:5067/api/Status', {
+            'Name': statusName,
+            'BoardId': boardId
         });
     }
 
-    getStatusList(): Observable<ITicketStatus[]> {
-        return this.http.get<ITicketStatus[]>('http://localhost:5067/api/Status');
+    getStatusByBoardId(boardId: number): Observable<IStatus[]> {
+        return this.http.get<IStatus[]>('http://localhost:5067/api/Status/Board/' + boardId);
     }
 }

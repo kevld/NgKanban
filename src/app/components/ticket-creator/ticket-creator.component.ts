@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { CreateTicketAction } from '../../actions/ticket/ticket-actions.action';
+import { CreateTicketAction, GetTicketsByBoardAction } from '../../actions/ticket/ticket-actions.action';
 import { StatusState } from '../../states/status/status.state';
-import { Observable } from 'rxjs';
-import { ITicketStatus } from '../../interfaces/iticket-status';
-import { GetStatusListAction } from '../../actions/status/status-actions.action';
+import { Observable, tap } from 'rxjs';
+import { IStatus } from '../../interfaces/iticket-status';
 import { BoardState } from '../../states/board/board-state.state';
+import { GetStatusListByBoardAction } from '../../actions/status/status-actions.action';
 
 @Component({
     selector: 'app-ticket-creator',
@@ -19,9 +19,9 @@ export class TicketCreatorComponent implements OnInit {
     description: string = "";
     statusId: number = 0;
     boardId: number = 0;
-    
+
     @Select(StatusState.statusList)
-    status$?: Observable<ITicketStatus[]>;
+    status$?: Observable<IStatus[]>;
 
     @Select(BoardState.selectedBoardId)
     boardId$?: Observable<number>;
@@ -30,16 +30,20 @@ export class TicketCreatorComponent implements OnInit {
 
     }
     ngOnInit(): void {
-        this.store.dispatch(new GetStatusListAction());
 
         this.boardId$?.subscribe(x => {
             this.boardId = x;
+            this.store.dispatch(new GetStatusListByBoardAction(this.boardId));
         });
     }
 
     createTicket(): void {
         if (this.title && this.title != "") {
-            this.store.dispatch(new CreateTicketAction(this.title, this.description, this.statusId, this.boardId));
+            this.store.dispatch(new CreateTicketAction(this.title, this.description, this.statusId, this.boardId)).subscribe(
+                () => {
+                    this.store.dispatch(new GetTicketsByBoardAction(this.boardId));
+                }
+            );
         }
     }
 

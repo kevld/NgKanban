@@ -1,12 +1,12 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { ITicketStatus } from "../../interfaces/iticket-status";
+import { IStatus } from "../../interfaces/iticket-status";
 import { Injectable } from "@angular/core";
-import { CreateStatusAction, GetStatusListAction } from "../../actions/status/status-actions.action";
+import { CreateStatusAction, GetStatusListByBoardAction } from "../../actions/status/status-actions.action";
 import { StatusService } from "../../services/status/status.service";
 import { Observable, tap } from "rxjs";
 
 export class StatusStateModel {
-    status: ITicketStatus[] = [];
+    status: IStatus[] = [];
 }
 
 
@@ -27,8 +27,8 @@ export class StatusState {
     }
 
     @Action(CreateStatusAction)
-    createStatus({ getState, patchState }: StateContext<StatusStateModel>, { name }: CreateStatusAction): Observable<ITicketStatus> {
-        return this.statusService.createStatus(name).pipe(
+    createStatus({ getState, patchState }: StateContext<StatusStateModel>, { boardId, name }: CreateStatusAction): Observable<IStatus> {
+        return this.statusService.createStatus(boardId, name).pipe(
             tap(x => {
                 const statusList = getState().status;
                 patchState({
@@ -38,9 +38,9 @@ export class StatusState {
         );
     }
 
-    @Action(GetStatusListAction)
-    getStatusList({ patchState }: StateContext<StatusStateModel>): Observable<ITicketStatus[]> {
-        return this.statusService.getStatusList().pipe(
+    @Action(GetStatusListByBoardAction)
+    getStatusList({ patchState }: StateContext<StatusStateModel>, { boardId }: GetStatusListByBoardAction): Observable<IStatus[]> {
+        return this.statusService.getStatusByBoardId(boardId).pipe(
             tap(x => {
                 patchState({
                     status: x

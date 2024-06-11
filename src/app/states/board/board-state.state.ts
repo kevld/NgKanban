@@ -43,10 +43,13 @@ export class BoardState {
     }
 
     @Action(CreateBoardAction)
-    createBoard(ctx: StateContext<BoardStateModel>, { title, description }: CreateBoardAction): any {
+    createBoard({ getState, patchState }: StateContext<BoardStateModel>, { title, description }: CreateBoardAction): any {
         return this.boardService.createBoard(title, description).pipe(
             tap(x => {
-                console.log(x)
+                const boards = getState().boards;
+                patchState({
+                    boards: [...boards, x]
+                });
             })
         );
     }
