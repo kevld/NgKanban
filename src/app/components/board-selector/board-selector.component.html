@@ -1,12 +1,31 @@
-<span>
-    <fluent-label>Select board : </fluent-label>
-    <fluent-select title="Select a section" (change)="onChange($event)">
-        <fluent-option *ngFor="let board of boards$ | async" value="{{ board.id }}">{{ board.title }}</fluent-option>
-    </fluent-select>
-</span>
-<span>
-    <fluent-label>Or create a new one : </fluent-label>
-    <fluent-text-field appearance="outline" name="title" ngDefaultControl [(ngModel)]="title" placeholder="Board name"></fluent-text-field>
-    <fluent-text-field appearance="outline" name="description" ngDefaultControl [(ngModel)]="description" placeholder="Board description"></fluent-text-field>
-    <fluent-button appearance="accent" (click)="createBoard()">Create</fluent-button>
-</span>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row d-flex align-items-center">
+                <label class="col-md-3 col-form-label">Select board : </label>
+                <div class="col-md-9">
+                    <fluent-select title="Select a section" class="fluent-select-control" (change)="onChange($event)">
+                        <fluent-option *ngFor="let board of boards$ | async" value="{{ board.id }}">{{ board.title
+                            }}</fluent-option>
+                    </fluent-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row d-flex align-items-center">
+                <label class="col-md-3 col-form-label">Or create a new one : </label>
+                <div class="col-md-3 d-flex align-items-center">
+                    <fluent-text-field class="fluent-form-control" appearance="outline" name="title" ngDefaultControl [(ngModel)]="title"
+                        placeholder="Board name"></fluent-text-field>
+                </div>
+                <div class="col-md-3 d-flex align-items-center">
+                    <fluent-text-field class="fluent-form-control" appearance="outline" name="description" ngDefaultControl
+                        [(ngModel)]="description" placeholder="Board description"></fluent-text-field>
+                </div>
+                <div class="col-md-3 d-flex align-items-center">
+                    <fluent-button appearance="accent" class="fluent-button-control" (click)="createBoard()">Create</fluent-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

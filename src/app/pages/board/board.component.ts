@@ -47,10 +47,11 @@ export class BoardComponent implements OnInit {
             
 
             const columns: IStatus[] = this.store.selectSnapshot<IStatus[]>(StatusState.statusList);
-
+            console.log(columns)
             columns.forEach((col: IStatus) => {
                 this.columns.push({
                     status: col.id,
+                    statusName: col.name,
                     tickets: x.filter(t => t.statusId === col.id)
                 });
             });

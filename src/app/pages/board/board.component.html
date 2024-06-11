@@ -4,15 +4,23 @@
     <div class="cards-grid" [ngStyle]="getStyles()">
         <!-- <app-board-column *ngFor="let column of columns; index as i" [columnData]="column.status"
             [tickets]="column.tickets"></app-board-column> -->
-        <div *ngFor="let column of columns; index as i">
+        <div class="card-col" *ngFor="let column of columns; index as i">
             <div>
-                <fluent-label>{{ column.status.name }} {{ column.status.id }}</fluent-label>
+                <fluent-label>{{ column.statusName }}</fluent-label>
             </div>
-            <div id="{{ column.status}}" 
-                [cdkDropListConnectedTo]="connectedColumns" [cdkDropListData]="column.tickets" cdkDropList (cdkDropListDropped)="onDrop($event)">
-                <fluent-card cdkDrag *ngFor="let ticket of column.tickets">
-                    {{ ticket.id }} - {{ ticket.title }}
-                </fluent-card>
+            <fluent-divider class="mt-2 mb-3"></fluent-divider>
+            <div id="{{ column.status}}" [cdkDropListConnectedTo]="connectedColumns" [cdkDropListData]="column.tickets"
+                cdkDropList (cdkDropListDropped)="onDrop($event)">
+                <div class="row" *ngFor="let ticket of column.tickets">
+                    <div class="col-12">
+
+                        <fluent-card cdkDrag class="fluent-card mb-3">
+                            <h6>#{{ ticket.id }} - {{ ticket.title }}</h6>
+                            <fluent-divider class="mt-2 mb-3"></fluent-divider>
+                            <p>{{ ticket.description }}</p>
+                        </fluent-card>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

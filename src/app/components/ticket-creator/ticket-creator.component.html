@@ -1,9 +1,31 @@
-<div>
-    <fluent-label>Create a ticket : </fluent-label>
-    <fluent-text-field appearance="outline" ngDefaultControl [(ngModel)]="title" placeholder="Title"></fluent-text-field>
-    <fluent-text-field appearance="outline" ngDefaultControl [(ngModel)]="description" placeholder="Description"></fluent-text-field>
-    <fluent-select title="Select a status" (change)="onChange($event)">
-        <fluent-option *ngFor="let status of status$ | async" value="{{ status.id }}">{{ status.name }}</fluent-option>
-    </fluent-select>
-    <fluent-button (click)="createTicket()">Add</fluent-button>
+<div class="container-fluid">
+    <div class="row d-flex align-items-center">
+        <div class="col-md-5">
+            <div class="row">
+                <fluent-label class="col-md-3 col-form-label">Create a ticket : </fluent-label>
+                <div class="col-md-9 d-flex align-items-center">
+                    <fluent-text-field class="fluent-form-control" appearance="outline" ngDefaultControl
+                        [(ngModel)]="title" placeholder="Title"></fluent-text-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row d-flex align-items-center">
+                <div class="col-md-6 d-flex align-items-center">
+                    <fluent-text-field class="fluent-form-control" appearance="outline" ngDefaultControl
+                        [(ngModel)]="description" placeholder="Description"></fluent-text-field>
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <fluent-select class="fluent-select-control" title="Select a status" (change)="onChange($event)">
+                        <fluent-option *ngFor="let status of status$ | async" value="{{ status.id }}">{{ status.name
+                            }}</fluent-option>
+                    </fluent-select>
+                </div>
+                <div class="col-md-2 d-flex align-items-center">
+                    <fluent-button class="col-md-2 fluent-button-control" appearance="accent"
+                        (click)="createTicket()">Add</fluent-button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
