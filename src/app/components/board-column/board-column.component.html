@@ -1,8 +1,0 @@
-<div>
-    <fluent-label>{{ columnData.name }} {{ id }}</fluent-label>
-</div>
-<div id="{{ id }}" data-id="{{ columnData.id }}" *ngIf="connectedColumns.length" [cdkDropListConnectedTo]="connectedColumns" cdkDropList (cdkDropListDropped)="onDrop($event)">
-    <fluent-card cdkDrag *ngFor="let ticket of tickets">
-        {{ ticket.id }} - {{ ticket.title }}
-    </fluent-card>
-</div>

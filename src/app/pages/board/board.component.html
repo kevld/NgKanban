@@ -2,8 +2,6 @@
     <app-board-selector></app-board-selector>
     <app-ticket-creator></app-ticket-creator>
     <div class="cards-grid" cdkDropListGroup [ngStyle]="getStyles()">
-        <!-- <app-board-column *ngFor="let column of columns; index as i" [columnData]="column.status"
-            [tickets]="column.tickets"></app-board-column> -->
         <div class="card-col" *ngFor="let column of columns; index as i">
             <div>
                 <fluent-label>{{ column.statusName }}</fluent-label>
