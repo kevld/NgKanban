@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { CreateTicketAction, GetTicketsByBoardAction } from '../../actions/ticket/ticket-actions.action';
 import { StatusState } from '../../states/status/status.state';
@@ -14,27 +14,28 @@ import { GetStatusListByBoardAction } from '../../actions/status/status-actions.
 })
 export class TicketCreatorComponent implements OnInit {
 
+    private readonly store: Store = inject(Store);
 
     title: string = "";
     description: string = "";
     statusId: number = 0;
     boardId: number = 0;
 
-    @Select(StatusState.statusList)
-    status$?: Observable<IStatus[]>;
+    status$: Observable<IStatus[]> = this.store.select(StatusState.statusList);
 
-    @Select(BoardState.selectedBoardId)
-    boardId$?: Observable<number>;
+    boardId$: Observable<number> = this.store.select(BoardState.selectedBoardId);
 
-    constructor(private store: Store) {
-
-    }
     ngOnInit(): void {
 
-        this.boardId$?.subscribe(x => {
+        this.boardId$.subscribe(x => {
             this.boardId = x;
             this.store.dispatch(new GetStatusListByBoardAction(this.boardId));
         });
+
+        this.status$.subscribe((x: IStatus[]) => {
+            if(x && x.length)
+            this.statusId = x[0].id
+        })
     }
 
     createTicket(): void {

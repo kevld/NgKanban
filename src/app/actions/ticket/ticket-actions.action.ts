@@ -10,5 +10,5 @@ export class GetTicketsByBoardAction {
 
 export class UpdateTicketStateAction {
     static readonly type = '[Status] UpdateTicketStateAction';
-    constructor(public boardId: number, public ticketId: number, public newState: number) { }
+    constructor(public ticketId: number, public newState: number) { }
 }

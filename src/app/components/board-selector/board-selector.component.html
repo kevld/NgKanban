@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-md-5">
             <div class="row d-flex align-items-center">
-                <label class="col-md-3 col-form-label">Select board : </label>
+                <label for="select-board" class="col-md-3 col-form-label">Select board : </label>
                 <div class="col-md-9">
-                    <fluent-select title="Select a section" class="fluent-select-control" (change)="onChange($event)">
+                    <fluent-select id="select-board" title="Select a section" class="fluent-select-control" (change)="onChange($event)">
                         <fluent-option *ngFor="let board of boards$ | async" value="{{ board.id }}">{{ board.title
                             }}</fluent-option>
                     </fluent-select>
@@ -13,9 +13,9 @@
         </div>
         <div class="col-md-7">
             <div class="row d-flex align-items-center">
-                <label class="col-md-3 col-form-label">Or create a new one : </label>
+                <label for="board-name" class="col-md-3 col-form-label">Or create a new one : </label>
                 <div class="col-md-3 d-flex align-items-center">
-                    <fluent-text-field class="fluent-form-control" appearance="outline" name="title" ngDefaultControl [(ngModel)]="title"
+                    <fluent-text-field id="board-name" class="fluent-form-control" appearance="outline" name="title" ngDefaultControl [(ngModel)]="title"
                         placeholder="Board name"></fluent-text-field>
                 </div>
                 <div class="col-md-3 d-flex align-items-center">

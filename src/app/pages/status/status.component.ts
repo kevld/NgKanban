@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { StatusState } from '../../states/status/status.state';
@@ -13,18 +13,15 @@ import { BoardState } from '../../states/board/board-state.state';
 })
 export class StatusComponent implements OnInit {
 
+    private readonly store: Store = inject(Store);
+
     newStatusName: string = "";
 
-    @Select(StatusState.statusList)
-    status$?: Observable<IStatus[]>;
+    status$: Observable<IStatus[]> = this.store.select(StatusState.statusList);
 
-    @Select(BoardState.selectedBoardId)
-    selectedBoardId$!: Observable<number>;
+    selectedBoardId$: Observable<number> = this.store.select(BoardState.selectedBoardId);
 
     selectedBoardId: number = 0;
-
-    constructor(private store: Store) {
-    }
 
     ngOnInit(): void {
         this.selectedBoardId$.subscribe(x => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { CreateBoardAction, GetBoardListAction, SelectBoardAction } from '../../actions/board/board-actions.action';
 import { Observable } from 'rxjs';
@@ -12,16 +12,20 @@ import { IBoard } from '../../interfaces/iboard';
 })
 export class BoardSelectorComponent implements OnInit {
 
+    private readonly store: Store = inject(Store);
+
     title: string = "";
     description: string = "";
 
-    @Select(BoardState.boards)
-    boards$?: Observable<IBoard[]>;
-    
-    constructor(private store: Store) { }
+    boards$: Observable<IBoard[]> = this.store.select(BoardState.boards);
 
     ngOnInit(): void {
         this.store.dispatch(new GetBoardListAction());
+
+        this.boards$.subscribe((x: IBoard[]) => {
+            if(x && x.length)
+            this.store.dispatch(new SelectBoardAction(x[0].id));
+        });
     }
 
     onChange(ev: any): void {

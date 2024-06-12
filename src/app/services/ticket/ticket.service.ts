@@ -23,7 +23,7 @@ export class TicketService {
         return this.http.get<ITicket[]>('http://localhost:5067/api/Ticket/board/' + boardId);
     }
 
-    updateTicketStatus(boardId: number, ticketId: number, newState: number): Observable<any> {
+    updateTicketStatus(ticketId: number, newState: number): Observable<any> {
         return this.http.put<any>('http://localhost:5067/api/Ticket/status', {
                 'TicketId': ticketId,
                 'StatusId': newState

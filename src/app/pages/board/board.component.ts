@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { BoardState } from '../../states/board/board-state.state';
 import { Observable } from 'rxjs';
@@ -17,23 +17,20 @@ import { IStatus } from '../../interfaces/iticket-status';
     styleUrl: './board.component.scss'
 })
 export class BoardComponent implements OnInit {
-    @Select(BoardState.boards)
+
+    private readonly store: Store = inject(Store);
+
     board$?: Observable<IBoard>;
 
-    @Select(BoardState.selectedBoardId)
-    selectedBoardId$?: Observable<number>;
+    selectedBoardId$: Observable<number> = this.store.select(BoardState.selectedBoardId);
 
-    @Select(TicketState.tickets)
-    tickets$?: Observable<ITicket[]>;
+    tickets$: Observable<ITicket[]> = this.store.select(TicketState.tickets);
 
-    @Select(BoardState.registeredColumns)
-    connectedColumns$!: Observable<string[]>;
+    connectedColumns$: Observable<string[]> = this.store.select(BoardState.registeredColumns);
 
     connectedColumns: string[] = [];
 
     columns: any[] = [];
-
-    constructor(private store: Store) { }
 
     ngOnInit(): void {
         this.selectedBoardId$?.subscribe(x => {
@@ -56,10 +53,7 @@ export class BoardComponent implements OnInit {
                 });
             });
 
-
             this.connectedColumns = columns.map(x => x.id.toString());
-
-            //this.store.dispatch(new DragDropConnection(this.columns.map(x => x.)));
         });
     }
 
@@ -83,7 +77,7 @@ export class BoardComponent implements OnInit {
             );
 
             const boardId = this.store.selectSnapshot<number>(BoardState.selectedBoardId);
-            this.store.dispatch(new UpdateTicketStateAction(boardId, event.container.data[event.currentIndex].id, parseInt(event.container.id)))
+            this.store.dispatch(new UpdateTicketStateAction(event.container.data[event.currentIndex].id, parseInt(event.container.id)))
           }
     }
 }

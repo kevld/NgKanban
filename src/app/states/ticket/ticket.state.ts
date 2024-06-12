@@ -6,7 +6,7 @@ import { tap } from "rxjs";
 import { ITicket } from "../../interfaces/iticket";
 
 export class TicketStateModel {
-    tickets: ITicket[]  = [];
+    tickets: ITicket[] = [];
 }
 
 
@@ -27,7 +27,7 @@ export class TicketState {
     }
 
     @Action(CreateTicketAction)
-    createTicket({}: StateContext<TicketStateModel>, { title, description, statusId, boardId }: CreateTicketAction) {
+    createTicket({ }: StateContext<TicketStateModel>, { title, description, statusId, boardId }: CreateTicketAction) {
         return this.ticketService.createTicket(title, description, statusId, boardId).pipe(
             tap(x => {
                 console.log(x);
@@ -47,8 +47,8 @@ export class TicketState {
     }
 
     @Action(UpdateTicketStateAction)
-    updateTicketStatus(ctx: StateContext<TicketStateModel>, { boardId, ticketId, newState }:UpdateTicketStateAction) {
-        return this.ticketService.updateTicketStatus(boardId, ticketId, newState).pipe(
+    updateTicketStatus(ctx: StateContext<TicketStateModel>, { ticketId, newState }: UpdateTicketStateAction) {
+        return this.ticketService.updateTicketStatus(ticketId, newState).pipe(
             tap(x => x)
         );
     }

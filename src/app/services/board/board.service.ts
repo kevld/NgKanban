@@ -12,11 +12,6 @@ export class BoardService {
     }
     
     createBoard(title: string, description: string): Observable<IBoard> {
-
-        let params = new HttpParams();
-        params = params.append('Title', title);
-        params = params.append('Description', description);
-
         return this.http.post<IBoard>('http://localhost:5067/api/Board', {
             'title': title,
             'description': description
